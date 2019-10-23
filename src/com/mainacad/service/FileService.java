@@ -1,8 +1,7 @@
 package com.mainacad.service;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
 
 public class FileService {
 
@@ -14,19 +13,11 @@ public class FileService {
     public static void writeTextToFile(String text, String fileName) {
         checkTargetDir();
 
-        FileWriter fileWriter = null;
-        try {
-            fileWriter = new FileWriter(FILES_DIR + SEP + fileName);
+        try (FileWriter fileWriter = new FileWriter(FILES_DIR + SEP + fileName)) {
             fileWriter.write(text);
             fileWriter.flush();
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                fileWriter.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 
@@ -39,6 +30,45 @@ public class FileService {
 
     public static String readTextFromFile(String fileName) {
         String out = "";
+
+        try (FileReader fileReader = new FileReader(FILES_DIR + SEP + fileName);
+             BufferedReader bufferedReader = new BufferedReader(fileReader)) {
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                out += line + "\n";
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return out;
     }
+
+    // work with bytes
+    public static void writeBytesToFile(byte[] bytes, String fileName){
+        checkTargetDir();
+        try (FileOutputStream fileOutputStream = new FileOutputStream(FILES_DIR + SEP + fileName)){
+            fileOutputStream.write(bytes);
+            fileOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static byte[] getBytesFromFile(String fileName) {
+        File file = new File(FILES_DIR + SEP + fileName);
+        try {
+            return Files.readAllBytes(file.toPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new byte[0];
+    }
+
+    public static void copeFile (String sourceName, String targerName) {
+        byte[] bytes = getBytesFromFile(sourceName);
+        writeBytesToFile(bytes, targerName);
+    }
+
 }

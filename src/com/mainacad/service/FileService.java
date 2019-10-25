@@ -12,7 +12,6 @@ public class FileService {
     // work with text
     public static void writeTextToFile(String text, String fileName) {
         checkTargetDir();
-
         try (FileWriter fileWriter = new FileWriter(FILES_DIR + SEP + fileName)) {
             fileWriter.write(text);
             fileWriter.flush();
@@ -30,25 +29,22 @@ public class FileService {
 
     public static String readTextFromFile(String fileName) {
         String out = "";
-
         try (FileReader fileReader = new FileReader(FILES_DIR + SEP + fileName);
              BufferedReader bufferedReader = new BufferedReader(fileReader)) {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 out += line + "\n";
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return out;
     }
 
     // work with bytes
-    public static void writeBytesToFile(byte[] bytes, String fileName){
+    public static void writeBytesToFile(byte[] bytes, String fileName) {
         checkTargetDir();
-        try (FileOutputStream fileOutputStream = new FileOutputStream(FILES_DIR + SEP + fileName)){
+        try (FileOutputStream fileOutputStream = new FileOutputStream(FILES_DIR + SEP + fileName)) {
             fileOutputStream.write(bytes);
             fileOutputStream.flush();
         } catch (IOException e) {
@@ -66,9 +62,9 @@ public class FileService {
         return new byte[0];
     }
 
-    public static void copeFile (String sourceName, String targerName) {
-        byte[] bytes = getBytesFromFile(sourceName);
-        writeBytesToFile(bytes, targerName);
+    public static void copyFile(String sourceFileName, String targetFileName) {
+        byte[] bytes = getBytesFromFile(sourceFileName);
+        writeBytesToFile(bytes, targetFileName);
     }
 
 }

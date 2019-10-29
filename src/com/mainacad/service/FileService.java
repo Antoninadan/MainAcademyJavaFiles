@@ -40,18 +40,15 @@ public class FileService {
 
     public static String readTextFromFile(String fileName) {
         String out = "";
-
         try (FileReader fileReader = new FileReader(FILES_DIR + SEP + fileName);
              BufferedReader bufferedReader = new BufferedReader(fileReader)) {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 out += line + "\n";
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return out;
     }
 

@@ -23,7 +23,7 @@ public class ExistingFileTest {
         connectionInfoList = FileService.readConnectionsFromFile(FILE_NAME);
     }
 
-    @AfterAll
+    @AfterEach
     void tearDown(){
         boolean append = false;
         for (ConnectionInfo connectionInfo:connectionInfoList){

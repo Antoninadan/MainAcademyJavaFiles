@@ -14,7 +14,7 @@ class FileServiceTest {
     private static final String BYTES_FILE_NAME = "test_bytes_file.obj";
 
     @BeforeAll
-    static void setUpBeforeAll(){
+    static void setUpBeforeAll() {
         byte[] testBytes = FileService.getBytesFromFile("cat.jpg");
         FileService.writeBytesToFile(testBytes, BYTES_FILE_NAME);
     }
@@ -53,14 +53,17 @@ class FileServiceTest {
         List<ConnectionInfo> testObj = FileService.readConnectionsFromFile(BYTES_FILE_NAME);
         assertNotNull(testObj);
         assertTrue(testObj.size() > 0);
-//        assertNotNull
-        assertTrue(testObj.contains(" "));
-//        assertTrue(testText.length() > 22);
+        assertNotNull(testObj.get(0).getConnectionTime());
+        assertNotNull(testObj.get(0).getIp());
+        assertNotNull(testObj.get(0).getSessionId());
+        assertTrue(testObj.get(0).getSessionId() > 10000 &&
+                testObj.get(0).getSessionId() < 99999);
     }
 
     @Test
     void getBytesFromFile() {
         byte[] testBytes = FileService.getBytesFromFile(BYTES_FILE_NAME);
-
+        assertNotNull(testBytes);
+        assertTrue(testBytes.length > 0);
     }
 }

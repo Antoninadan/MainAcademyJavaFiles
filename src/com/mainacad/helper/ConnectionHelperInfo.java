@@ -15,8 +15,7 @@ public class ConnectionHelperInfo {
                 getRandomNumber(100, 255) + "."+
                 getRandomNumber(100, 255) + "."+
                 getRandomNumber(100, 255) + "."+
-                getRandomNumber(100, 255)
-        );
+                getRandomNumber(100, 255));
         return connectionInfo;
     }
 

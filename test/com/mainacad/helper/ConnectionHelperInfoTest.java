@@ -14,7 +14,5 @@ class ConnectionHelperInfoTest {
         assertNotNull(testObj.getIp());
         assertNotNull(testObj.getSessionId());
         assertTrue(testObj.getSessionId() > 10000 & testObj.getSessionId() < 9999);
-
-
     }
 }

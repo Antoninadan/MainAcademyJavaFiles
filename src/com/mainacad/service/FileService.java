@@ -60,10 +60,11 @@ public class FileService {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 ConnectionInfo connectionInfo = new ConnectionInfo();
-                String[] words = line.split("");
+                String[] words = line.split(" ");
                 connectionInfo.setSessionId(Integer.valueOf(words[0]));
                 connectionInfo.setConnectionTime(Long.valueOf(words[1]));
                 connectionInfo.setIp(words[2]);
+                connectionInfoList.add(connectionInfo);
             }
         } catch (IOException e) {
             e.printStackTrace();

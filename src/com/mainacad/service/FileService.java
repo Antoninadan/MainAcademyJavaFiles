@@ -120,4 +120,27 @@ public class FileService {
         sourceFile.delete();
     }
 
+    public static void writeObjectToFile(Object object, String fileName) {
+        checkTargetDir();
+        try (FileOutputStream fileOutputStream = new FileOutputStream(FILES_DIR + SEP + fileName);
+             ObjectOutputStream objectInputStream = new ObjectOutputStream(fileOutputStream)) {
+            objectInputStream.writeObject(object);
+            objectInputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Object readObjectFromFile(String fileName) {
+        try (FileInputStream fileInputStream = new FileInputStream(FILES_DIR + SEP + fileName);
+             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
+            return objectInputStream.readObject();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        } catch (ClassNotFoundException e1) {
+            e1.printStackTrace();
+        }
+        return null;
+    }
+
 }

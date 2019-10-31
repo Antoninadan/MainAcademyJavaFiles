@@ -12,11 +12,15 @@ import static org.junit.jupiter.api.Assertions.*;
 class FileServiceTest {
     private static final String TEXT_FILE_NAME = "test_text_file.txt";
     private static final String BYTES_FILE_NAME = "test_bytes_file.obj";
+    private static final String OBJECT_FILE_NAME = "test_object_file.obj";
+    private static ConnectionInfo connectionInfo;
 
     @BeforeAll
     static void setUpBeforeAll() {
         byte[] testBytes = FileService.getBytesFromFile("cat.jpg");
         FileService.writeBytesToFile(testBytes, BYTES_FILE_NAME);
+        connectionInfo = ConnectionHelperInfo.getRandomConnactionInfo();
+        FileService.writeObjectToFile(connectionInfo, OBJECT_FILE_NAME);
     }
 
     @BeforeEach
@@ -65,5 +69,13 @@ class FileServiceTest {
         byte[] testBytes = FileService.getBytesFromFile(BYTES_FILE_NAME);
         assertNotNull(testBytes);
         assertTrue(testBytes.length > 0);
+    }
+
+    @Test
+    void readObjectFromFile(){
+        ConnectionInfo testConnectionInfo = (ConnectionInfo) FileService.readObjectFromFile(OBJECT_FILE_NAME);
+        assertNotNull(testConnectionInfo);
+        assertEquals(connectionInfo.getIp(), testConnectionInfo.getIp());
+
     }
 }
